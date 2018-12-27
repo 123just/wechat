@@ -9,16 +9,20 @@
     </div>
 
     <div class="usermotto">
-      <div class="user-motto">
-        <card :text="motto"></card>
+      <div class="hint-text">
+        <card :text="hintText"></card>
       </div>
     </div>
 
-    <form class="form-container">
-      <input type="text" class="form-control" v-model="motto" placeholder="v-model" />
-      <input type="text" class="form-control" v-model.lazy="motto" placeholder="v-model.lazy" />
-    </form>
-    <a href="/pages/counter/main" class="counter">去往Vuex示例页面</a>
+    <div class="userinfo" @click="bindViewTap">
+      <img class="userinfo-avatar" v-if="userInfo.avatarUrl" :src="userInfo.avatarUrl" background-size="cover" />
+      <div class="userinfo-nickname">
+        <card :text="userInfo.nickName"></card>
+      </div>
+    </div>
+
+    <i-button type="primary" @click="bindViewTap">确  认</i-button>
+    <a href="/pages/counter/main" class="counter">确  认</a>
   </div>
 </template>
 
@@ -29,6 +33,7 @@ export default {
   data () {
     return {
       motto: 'Hello World',
+      hintText: '请选择你的角色：',
       userInfo: {}
     }
   },
@@ -85,7 +90,9 @@ export default {
 }
 
 .usermotto {
-  margin-top: 150px;
+  font-size: 15px;
+  margin-top: 15px;
+  width: 100%;
 }
 
 .form-control {
