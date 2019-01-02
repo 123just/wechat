@@ -1,34 +1,25 @@
 <template>
-  <div class="container" @click="clickHandle('test click', $event)">
+  <div class="container" >
 
     <div class="userinfo" @click="bindViewTap">
       <img class="userinfo-avatar" v-if="userInfo.avatarUrl" :src="userInfo.avatarUrl" background-size="cover" />
       <div class="userinfo-nickname">
-        <card :text="userInfo.nickName"></card>
+        <span>{{userInfo.nickName}}</span>
       </div>
     </div>
-
-    <div class="usermotto">
-      <div class="hint-text">
-        <card :text="hintText"></card>
-      </div>
+    <div class="hint-text">
+      {{hintText}}
     </div>
-
-    <div class="userinfo" @click="bindViewTap">
-      <img class="userinfo-avatar" v-if="userInfo.avatarUrl" :src="userInfo.avatarUrl" background-size="cover" />
-      <div class="userinfo-nickname">
-        <card :text="userInfo.nickName"></card>
-      </div>
+    <div class="role-judge" @click="bindViewTap">
+      志愿者
     </div>
-
-    <i-button type="primary" @click="bindViewTap">确  认</i-button>
-    <a href="/pages/counter/main" class="counter">确  认</a>
+    <div class="role-judge" @click="bindViewTap">
+      借伞人
+    </div>
   </div>
 </template>
 
 <script>
-import card from '@/components/card'
-
 export default {
   data () {
     return {
@@ -37,14 +28,9 @@ export default {
       userInfo: {}
     }
   },
-
-  components: {
-    card
-  },
-
   methods: {
     bindViewTap () {
-      const url = '../logs/main'
+      const url = '../counter/main'
       wx.navigateTo({ url })
     },
     getUserInfo () {
@@ -58,9 +44,6 @@ export default {
           })
         }
       })
-    },
-    clickHandle (msg, ev) {
-      console.log('clickHandle:', msg, ev)
     }
   },
 
@@ -89,24 +72,18 @@ export default {
   color: #aaa;
 }
 
-.usermotto {
+.hint-text {
   font-size: 15px;
-  margin-top: 15px;
+  margin: 15px 0 10px 15px;
   width: 100%;
 }
 
-.form-control {
-  display: block;
-  padding: 0 12px;
-  margin-bottom: 5px;
-  border: 1px solid #ccc;
-}
-
-.counter {
-  display: inline-block;
-  margin: 10px auto;
-  padding: 5px 10px;
-  color: blue;
-  border: 1px solid blue;
+.role-judge{
+  width: 100%;
+  height: 80px;
+  background: #dddddd;
+  margin-bottom: 20px;
+  line-height: 80px;
+  padding-left: 30px;
 }
 </style>

@@ -1,19 +1,34 @@
 <template>
-  <div>
-    <p class="card">
-      {{text}}
-    </p>
+  <div class="card">
+    <span class="card-title">{{title}}</span>
+    <span class="card-text">{{text}}</span>
   </div>
 </template>
 
 <script>
 export default {
-  props: ['text']
+  props: {
+    'title': String,
+    'text': String
+  }
 }
 </script>
 
 <style>
 .card {
-  padding: 10px;
+  display: flex;
+  justify-content: space-between;
+  background: #ffffff;
+}
+.card-title{
+  width: 30%;
+  font-size: 13px;
+  color: #333;
+  margin-right: 5px;
+}
+.card-title{
+  flex: 1;
+  font-size: 13px;
+  color: #333;
 }
 </style>
