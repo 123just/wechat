@@ -1,6 +1,5 @@
 <template>
   <div class="container" >
-
     <div class="userinfo" @click="bindViewTap">
       <img class="userinfo-avatar" v-if="userInfo.avatarUrl" :src="userInfo.avatarUrl" background-size="cover" />
       <div class="userinfo-nickname">
@@ -10,10 +9,10 @@
     <div class="hint-text">
       {{hintText}}
     </div>
-    <div class="role-judge" @click="bindViewTap">
+    <div class="role-judge" @click="volunteerClick">
       志愿者
     </div>
-    <div class="role-judge" @click="bindViewTap">
+    <div class="role-judge" @click="borrowerClick">
       借伞人
     </div>
   </div>
@@ -29,8 +28,12 @@ export default {
     }
   },
   methods: {
-    bindViewTap () {
-      const url = '../counter/main'
+    volunteerClick () {
+      const url = '../sign/main'
+      wx.navigateTo({ url })
+    },
+    borrowerClick () {
+      const url = '../register/main'
       wx.navigateTo({ url })
     },
     getUserInfo () {

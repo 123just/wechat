@@ -18,7 +18,16 @@ export function formatTime (date) {
   return `${t1} ${t2}`
 }
 
+export function formatOnlyTime (date) {
+  const hour = date.getHours()
+  const minute = date.getMinutes()
+  const second = date.getSeconds()
+
+  return [hour, minute, second].map(formatNumber).join(':')
+}
+
 export default {
   formatNumber,
-  formatTime
+  formatTime,
+  formatOnlyTime
 }

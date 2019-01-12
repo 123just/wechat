@@ -1,13 +1,24 @@
 {
   "pages": [
     "pages/index/main",
-    "pages/logs/main",
-    "pages/counter/main"
+    "pages/register/main",
+    "pages/counter/main",
+    "pages/sign/main",
+    "pages/sendUmbrella/main",
+    "pages/history/main"
   ],
   "window": {
     "backgroundTextStyle": "light",
     "navigationBarBackgroundColor": "#000",
     "navigationBarTitleText": "爱心伞",
-    "navigationBarTextStyle": "white"
+    "navigationBarTextStyle": "white",
+    "backgroundColor": "#F9F9F9"
+  },
+  "usingComponents": {
+    "i-icon": "../../static/iview/icon/index",
+    "i-tab-bar": "../../static/iview/tab-bar/index",
+    "i-tab-bar-item": "../../static/iview/tab-bar-item/index",
+    "i-input": "../../static/iview/input/index",
+    "i-button": "../../static/iview/button/index"
   }
 }
