@@ -4,7 +4,7 @@
       <div class="history-title">超时未还伞记录</div>
       <div class="history-more" @click="historyMore">历史经手伞记录>></div>
       <div class="history-main">
-        <div class="history-item" v-for="item in unsendList" :key="item">
+        <div class="history-item" v-for="item in unsendList" :key="item" @click="toDetails(item.id)">
           <div>{{item.umbrellaId}}  {{item.borrowerName}}</div>
           <div>
           {{item.borrowTime}} 借伞
@@ -65,6 +65,10 @@ export default {
     historyMore () {
       const url = '../index/main'
       wx.navigateTo({ url })
+    },
+    toDetails (id) {
+      const url = '../details/main?id=' + id
+      wx.navigateTo({ url })
     }
   }
 }
@@ -89,7 +93,7 @@ export default {
 }
 .history-more {
   text-align: end;
-  margin-bottom: 15px;
+  margin-bottom: 13px;
   padding-right: 10px;
   font-size: 15px;
   color: #333;
@@ -99,7 +103,7 @@ export default {
   justify-content: space-between;
   align-items: center;
   height: 35px;
-  margin-bottom: 10px;
+  margin-bottom: 5px;
   padding: 5px 10px;
   font-size: 16px;
   background-color:  #ffffff;
