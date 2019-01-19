@@ -5,7 +5,9 @@
     "pages/counter/main",
     "pages/sign/main",
     "pages/sendUmbrella/main",
-    "pages/history/main"
+    "pages/history/main",
+    "pages/historyAll/main",
+    "pages/mine/main"
   ],
   "window": {
     "backgroundTextStyle": "light",

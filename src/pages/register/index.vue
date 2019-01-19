@@ -1,7 +1,7 @@
 <template>
   <div>
     <div class="register-part">
-      <div class="register-title">请完善您的信息</div>
+      <div class="register-title">{{ title }}</div>
       <div class="register-main">
         <i-input :value="name" title="姓名" autofocus placeholder="请输入姓名" maxlength="50" @change="inputName"/>
         <i-input :value="studentId" title="学号/工号" autofocus placeholder="请输入学号/工号" maxlength="50" @change="inputStudentId"/>
@@ -30,6 +30,7 @@ export default {
 
   data () {
     return {
+      title: '请完善您的信息',
       name: '',
       studentId: '',
       academyList: ['杭州国际服务工程学院', '教育学院'],
@@ -39,7 +40,8 @@ export default {
       tel: ''
     }
   },
-
+  onShow() {
+  },
   methods: {
     inputName (e) {
       this.name = e.mp.detail.detail.value

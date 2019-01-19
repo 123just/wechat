@@ -3,7 +3,14 @@
     <div class="details-part">
       <i-notice-bar backgroundcolor="#ff0000" color="#ffffff"
        v-if="role === 'volunteer'">已超时，请志愿者及时催还伞</i-notice-bar>
-      <i-notice-bar v-if="role === 'borrower'">请及时还伞</i-notice-bar>
+      <i-notice-bar backgroundcolor="#ff0000" color="#ffffff"
+       v-if="role === 'borrower'">请及时还伞</i-notice-bar>
+      <i-notice-bar backgroundcolor="#FF9900" color="#ffffff"
+      v-if="role === 'volunteer'">目前伞未还但未超时</i-notice-bar>
+      <i-notice-bar backgroundcolor="#FF9900" color="#ffffff"
+      v-if="role === 'borrower'">如无需使用请尽早归还</i-notice-bar>
+      <i-notice-bar backgroundcolor="#09BB07" color="#ffffff"
+      v-if="role === 'volunteer'">已还伞</i-notice-bar>
       <div class="details-title">详细信息</div>
       <div class="details-main">
         <div class="details-item">
@@ -64,7 +71,8 @@ export default {
       }
     }
   },
-  methods: {
+  onShow () {
+    // 获取historyItem数据
   }
 }
 </script>
