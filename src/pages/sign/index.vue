@@ -29,7 +29,7 @@
         </div>
       </div>  
     </div>
-    <i-tab-bar :current="current" color="#f759ab" @change="handleChange">
+    <i-tab-bar :current="current" color="#4B9DF2" @change="handleChange">
       <i-tab-bar-item key="sign" icon="homepage" current-icon="homepage_fill" title="首页"></i-tab-bar-item>
       <i-tab-bar-item key="sendUmbrella" icon="group" current-icon="group_fill" title="还伞"></i-tab-bar-item>
       <i-tab-bar-item key="history" icon="remind" current-icon="remind_fill" title="历史"></i-tab-bar-item>

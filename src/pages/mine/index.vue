@@ -1,18 +1,29 @@
 <template>
-  <div class="history">
-    <div class="history-part">
-      <div class="history-title">超时未还伞记录</div>
-      <div class="history-more" @click="historyMore">历史经手伞记录>></div>
-      <div class="history-main">
-        <div class="history-item" v-for="item in unsendList" :key="item" @click="toDetails(item.id)">
-          <div>{{item.umbrellaId}}  {{item.borrowerName}}</div>
-          <div>
-          {{item.borrowTime}} 借伞
+  <div class="mine">
+    <div class="mine-part">
+        <div class="mine-item" style="height: 70px">
+          <div class="user-name">
+            <div>{{ name }}</div>
+            <div>志愿者号：{{ volunteerId }}</div>
+          </div>
+          <div class="user-motto">
+            <div class="avatar"></div>
+            <div @click="changeRole">切换身份>></div>
+          </div>
         </div>
-        </div>
-      </div>
+        <i-cell-group>
+          <i-cell title="个人信息" is-link url="/pages/index/main">
+            <i-icon type="addressbook_fill" size="20" slot="icon" color="#4B9DF2" />
+          </i-cell>
+          <i-cell title="负责人">
+            <i-icon type="mine_fill" size="20" slot="icon" color="#4B9DF2" />
+          </i-cell>
+          <i-cell title="负责人联系方式">
+            <i-icon type="mobilephone_fill" size="20" slot="icon" color="#4B9DF2" />
+          </i-cell>
+        </i-cell-group>
     </div>
-    <i-tab-bar :current="current" color="#f759ab" @change="handleChange" style="height:50px">
+    <i-tab-bar :current="current" color="#4B9DF2" @change="handleChange" style="height:50px">
       <i-tab-bar-item key="sign" icon="homepage" current-icon="homepage_fill" title="首页"></i-tab-bar-item>
       <i-tab-bar-item key="sendUmbrella" icon="group" current-icon="group_fill" title="还伞"></i-tab-bar-item>
       <i-tab-bar-item key="history" icon="remind" current-icon="remind_fill" title="历史"></i-tab-bar-item>
@@ -22,37 +33,21 @@
 </template>
 
 <script>
-import { formatTime } from '@/utils/index'
 
 export default {
 
   data () {
     return {
       openId: '',
-      umbrellaId: '',
+      name: 'JUST',
+      volunteerId: '001',
+      umbrellaId: 'T01',
       remark: '',
-      current: 'history',
-      unsendList: [{
-        unsendId: '001',
-        umbrellaId: 'T01',
-        borrowerName: 'just',
-        borrowTime: new Date()
-      }, {
-        unsendId: '002',
-        umbrellaId: 'T02',
-        borrowerName: 'just1',
-        borrowTime: new Date()
-      }]
+      current: 'mine'
     }
   },
   onShow () {
     this.current = 'mine'
-  },
-  onLoad () {
-    // 获取unsendList数组
-    this.unsendList.forEach(e => {
-      e.borrowTime = formatTime(e.borrowTime)
-    })
   },
   methods: {
     handleChange (el) {
@@ -62,39 +57,40 @@ export default {
         wx.navigateTo({ url })
       }
     },
-    toDetails (id) {
-      const url = '../details/main?id=' + id
-      wx.navigateTo({ url })
+    changeRole () {
+      wx.reLaunch({
+        url: '/pages/index/main'
+      })
     }
   }
 }
 </script>
 
 <style>
-.history {
+.mine {
   display: flex;
   flex-direction: column;
   height: 100%;
 }
-.history-part {
+.mine-part {
   flex: 1;
   background-color: #f9f9f9; 
 }
-.history-title {
+.mine-title {
   display: flex;
   justify-content: center;
   align-items: center;
   height: 50px;
   font-size: 16px;
 }
-.history-more {
+.mine-more {
   text-align: end;
   margin-bottom: 13px;
   padding-right: 10px;
   font-size: 15px;
   color: #333;
 }
-.history-item {
+.mine-item {
   display: flex;
   justify-content: space-between;
   align-items: center;

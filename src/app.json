@@ -22,6 +22,8 @@
     "i-tab-bar-item": "../../static/iview/tab-bar-item/index",
     "i-input": "../../static/iview/input/index",
     "i-button": "../../static/iview/button/index",
-    "i-notice-bar": "../../static/iview/notice-bar/index"
+    "i-notice-bar": "../../static/iview/notice-bar/index",
+    "i-cell-group": "../../static/iview/cell-group/index",
+    "i-cell": "../../static/iview/cell/index"
   }
 }

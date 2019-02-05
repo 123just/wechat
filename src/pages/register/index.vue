@@ -40,7 +40,7 @@ export default {
       tel: ''
     }
   },
-  onShow() {
+  onShow () {
   },
   methods: {
     inputName (e) {
