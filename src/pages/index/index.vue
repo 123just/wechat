@@ -33,7 +33,7 @@ export default {
       wx.navigateTo({ url })
     },
     borrowerClick () {
-      const url = '../register/main'
+      const url = '../borrowUmbrella/main'
       wx.navigateTo({ url })
     },
     getUserInfo () {
