@@ -25,7 +25,7 @@
     </div>
     <i-tab-bar :current="current" color="#4B9DF2" @change="handleChange" style="height:50px">
       <i-tab-bar-item key="borrowUmbrella" icon="group" current-icon="group_fill" title="借伞"></i-tab-bar-item>
-      <i-tab-bar-item key="borrowHistory" icon="remind" current-icon="remind_fill" title="历史"></i-tab-bar-item>
+      <i-tab-bar-item key="history" icon="remind" current-icon="remind_fill" title="历史"></i-tab-bar-item>
       <i-tab-bar-item key="mine" icon="mine" current-icon="mine_fill" title="我的"></i-tab-bar-item>
     </i-tab-bar>
   </div>

@@ -3,11 +3,15 @@
     "pages/index/main",
     "pages/register/main",
     "pages/counter/main",
-    "pages/sign/main",
-    "pages/sendUmbrella/main",
-    "pages/history/main",
-    "pages/historyAll/main",
-    "pages/mine/main"
+    "pages/details/main",
+    "pages/volunteerPages/sign/main",
+    "pages/volunteerPages/sendUmbrella/main",
+    "pages/volunteerPages/history/main",
+    "pages/volunteerPages/historyAll/main",
+    "pages/volunteerPages/mine/main",
+    "pages/borrowerPages/history/main",
+    "pages/borrowerPages/borrowUmbrella/main",
+    "pages/borrowerPages/mine/main"
   ],
   "window": {
     "backgroundTextStyle": "light",

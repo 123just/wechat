@@ -1,8 +1,7 @@
 <template>
   <div class="history">
     <div class="history-part">
-      <div class="history-title">超时未还伞记录</div>
-      <div class="history-more" @click="historyMore">历史经手伞记录>></div>
+      <div class="history-title">历史借还伞记录</div>
       <div class="history-main">
         <div class="history-item" v-for="item in unsendList" :key="item" @click="toDetails(item.id)">
           <div>{{item.umbrellaId}}  {{item.borrowerName}}</div>
@@ -11,8 +10,7 @@
       </div>
     </div>
     <i-tab-bar :current="current" color="#4B9DF2" @change="handleChange" style="height:50px">
-      <i-tab-bar-item key="sign" icon="homepage" current-icon="homepage_fill" title="首页"></i-tab-bar-item>
-      <i-tab-bar-item key="sendUmbrella" icon="group" current-icon="group_fill" title="还伞"></i-tab-bar-item>
+      <i-tab-bar-item key="sendUmbrella" icon="group" current-icon="group_fill" title="借伞"></i-tab-bar-item>
       <i-tab-bar-item key="history" icon="remind" current-icon="remind_fill" title="历史"></i-tab-bar-item>
       <i-tab-bar-item key="mine" icon="mine" current-icon="mine_fill" title="我的"></i-tab-bar-item>
     </i-tab-bar>
@@ -67,7 +65,7 @@ export default {
       wx.navigateTo({ url })
     },
     toDetails (id) {
-      const url = '../details/main?id=' + id
+      const url = '../../details/main?id=' + id
       wx.navigateTo({ url })
     }
   }

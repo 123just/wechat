@@ -1,6 +1,6 @@
 <template>
   <div class="sign">
-    <div class="sign-part" style="background:url('../../img/sign_bg.png') no-repeat">
+    <div class="sign-part" style="background:url('../../../img/sign_bg.png') no-repeat">
       <div class="sign-part-time">
         <div class="now-time">{{nowTime}}</div>
         <div class="sign-time" v-if='signTime'>签到时间：{{signTime}}</div>

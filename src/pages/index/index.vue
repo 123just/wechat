@@ -29,11 +29,11 @@ export default {
   },
   methods: {
     volunteerClick () {
-      const url = '../sign/main'
+      const url = '../volunteerPages/sign/main'
       wx.navigateTo({ url })
     },
     borrowerClick () {
-      const url = '../borrowUmbrella/main'
+      const url = '../borrowerPages/borrowUmbrella/main'
       wx.navigateTo({ url })
     },
     getUserInfo () {
