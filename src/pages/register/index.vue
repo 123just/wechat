@@ -91,7 +91,7 @@ export default {
     changeClass (event) {
       this.classIndex = event.mp.detail.value
     },
-    submitClick () {        
+    submitClick () {
       const url = '../sign/main'
       wx.navigateTo({ url })
     }
