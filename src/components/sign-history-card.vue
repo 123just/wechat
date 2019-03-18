@@ -18,8 +18,8 @@
 <script>
 export default {
   props: {
-    'signInTime': Date,
-    'signOutTime': Date
+    'signInTime': String,
+    'signOutTime': String
   }
 }
 </script>

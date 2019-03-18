@@ -12,20 +12,8 @@
     <div class="history">
       <div class="history-title">历史签到签退记录</div>
       <div class="history-main">
-        <div class="history-item">
-          <sign-history-card :signInTime='signTime' :signOutTime = 'signTime'></sign-history-card>
-        </div>
-        <div class="history-item">
-          <sign-history-card :signInTime='signTime' :signOutTime = 'signTime'></sign-history-card>
-        </div>
-        <div class="history-item">
-          <sign-history-card :signInTime='signTime' :signOutTime = 'signTime'></sign-history-card>
-        </div>
-        <div class="history-item">
-          <sign-history-card :signInTime='signTime' :signOutTime = 'signTime'></sign-history-card>
-        </div>
-        <div class="history-item">
-          <sign-history-card :signInTime='signTime' :signOutTime = 'signTime'></sign-history-card>
+        <div class="history-item" v-for="item in signHistory" v-bind:key="item.index">
+          <sign-history-card :signInTime='item.signInTime' :signOutTime = item.signBackTime></sign-history-card>
         </div>
       </div>  
     </div>
@@ -54,7 +42,8 @@ export default {
       signTime: '',
       interval: '',
       signBtnText: 'signIn',
-      current: 'sign'
+      current: 'sign',
+      signHistory: []
     }
   },
   onShow () {
@@ -62,6 +51,7 @@ export default {
   },
   onLoad () {
     this._getNowTime()
+    this._getSignHistory()
   },
   onUnload () {
     this._stopInterval()
@@ -76,15 +66,30 @@ export default {
       }
     },
     signClick () {
-      if (this.signBtnText === 'signIn') {
+      if (this.signBtnText === 'signIn') { // 签到
         this.signBtnText = 'signOut'
         let time = new Date()
         this.signTime = formatOnlyTime(time)
         // 将时间和个人信息传给后端
-      } else {
+      } else { // 签退
         this.signBtnText = 'signIn'
         this.signTime = ''
       }
+    },
+    _getSignHistory () {
+      let that = this
+      wx.request({
+        url: 'http://139.199.88.87:9001/api/user/signInfo/all/0/10',
+        method: 'get',
+        header: {
+          'content-type': 'application/json',
+          'token': that.globalData.api.token
+        },
+        success: function (res) {
+          that.signHistory = res.data.data.list
+          console.log(that.signHistory)
+        }
+      })
     },
     _getNowTime () {
       this.interval = setInterval(() => {

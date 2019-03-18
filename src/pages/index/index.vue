@@ -9,12 +9,8 @@
     <div class="hint-text">
       {{hintText}}
     </div>
-    <div class="role-judge" @click="volunteerClick">
-      志愿者
-    </div>
-    <div class="role-judge" @click="borrowerClick">
-      借伞人
-    </div>
+    <button class="role-judge" open-type="getPhoneNumber" bindgetphonenumber="getVPhoneNum">志愿者</button>
+    <button class="role-judge" open-type="getPhoneNumber" bindgetphonenumber="getBPhoneNum">借伞人</button>
   </div>
 </template>
 
@@ -27,24 +23,68 @@ export default {
       userInfo: {}
     }
   },
+  onLoad () {
+    this.login()
+    this.getUserInfo()
+  },
   methods: {
-    volunteerClick () {
+    getVPhoneNum () {
+      this.login()
       const url = '../volunteerPages/sign/main'
       wx.navigateTo({ url })
     },
-    borrowerClick () {
+    getBPhoneNum () {
+      this.login()
       const url = '../borrowerPages/borrowUmbrella/main'
       wx.navigateTo({ url })
     },
-    getUserInfo () {
-      // 调用登录接口
-      wx.login({
-        success: () => {
-          wx.getUserInfo({
+    // 登录
+    login () {
+      wx.checkSession({
+        success: (res) => {
+          console.log(res, '登录未过期')
+        },
+        fail: function (res) {
+          console.log(res, '登录过期啦')
+          wx.login({
             success: (res) => {
-              this.userInfo = res.userInfo
+              // console.log(res.code)
+              // wx.request传递code参数
             }
           })
+        }
+      })
+      // 调取login接口获取token，并判断是否注册
+      let that = this
+      wx.request({
+        url: 'http://139.199.88.87:9001/login/in',
+        method: 'post',
+        data: {
+          'password': 123456,
+          'phone': 13588221947
+        },
+        header: {
+          'content-type': 'application/json' // 默认值
+        },
+        success: (res) => {
+          that.globalData.api = {token: res.data.data}
+          // if (!that.globalData.api.token) {
+          const url = '../register/main'
+          wx.navigateTo({ url })
+          // }
+          // console.log(that.globalData.api.token)
+        }
+      })
+    },
+    // 获取用户信息
+    getUserInfo () {
+      wx.getUserInfo({
+        success: (res) => {
+          // console.log(res)
+          this.userInfo = res.userInfo
+        },
+        fail: (res) => {
+          // console.log(res + 'fail')
         }
       })
     }
@@ -52,7 +92,7 @@ export default {
 
   created () {
     // 调用应用实例的方法获取全局数据
-    this.getUserInfo()
+    // this.getUserInfo()
   }
 }
 </script>
@@ -61,7 +101,7 @@ export default {
 .userinfo {
   display: flex;
   flex-direction: column;
-  align-items: center;
+  align-items: cednter;
 }
 
 .userinfo-avatar {
@@ -85,8 +125,7 @@ export default {
   width: 100%;
   height: 80px;
   background: #dddddd;
-  margin-bottom: 20px;
   line-height: 80px;
-  padding-left: 30px;
+  border-radius: 0;
 }
 </style>

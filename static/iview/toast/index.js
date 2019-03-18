@@ -14,15 +14,14 @@ Component({
     externalClasses: ['i-class'],
 
     data: {
-        ...default_data
+        classic: default_data
     },
-
     methods: {
         handleShow (options) {
             const { type = 'default', duration = 2 } = options;
 
             this.setData({
-                ...options,
+                classic: options,
                 type,
                 duration,
                 visible: true
@@ -41,7 +40,7 @@ Component({
 
         handleHide () {
             this.setData({
-                ...default_data
+                classic: default_data
             });
         }
     }
