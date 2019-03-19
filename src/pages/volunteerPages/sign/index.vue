@@ -43,7 +43,8 @@ export default {
       interval: '',
       signBtnText: 'signIn',
       current: 'sign',
-      signHistory: []
+      signHistory: [],
+      Request: this.$api.api.prototype
     }
   },
   onShow () {
@@ -66,15 +67,23 @@ export default {
       }
     },
     signClick () {
-      if (this.signBtnText === 'signIn') { // 签到
-        this.signBtnText = 'signOut'
-        let time = new Date()
-        this.signTime = formatOnlyTime(time)
-        // 将时间和个人信息传给后端
-      } else { // 签退
-        this.signBtnText = 'signIn'
-        this.signTime = ''
-      }
+      console.log('signClick')
+      this.Request.sign(this.globalData.api.token).then(res => {
+        if (res.code !== 200) {
+          console.log(res)
+        } else {
+          if (this.signBtnText === 'signOut') { // 签退
+            this.signBtnText = 'signIn'
+            this.signTime = ''
+          } else { // 签到
+            this.signBtnText = 'signOut'
+            this.signTime = formatOnlyTime(new Date())
+          }
+          this._getSignHistory()
+        }
+      }).catch(res => {
+        console.log(res)
+      })
     },
     _getSignHistory () {
       let that = this

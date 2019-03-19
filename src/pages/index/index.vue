@@ -20,12 +20,16 @@ export default {
     return {
       motto: 'Hello World',
       hintText: '请选择你的角色：',
-      userInfo: {}
+      userInfo: {},
+      tel: '13588221947'
     }
   },
   onLoad () {
     this.login()
     this.getUserInfo()
+  },
+  submit () {
+    console.log('submit')
   },
   methods: {
     getVPhoneNum () {
@@ -69,7 +73,7 @@ export default {
         success: (res) => {
           that.globalData.api = {token: res.data.data}
           // if (!that.globalData.api.token) {
-          const url = '../register/main'
+          const url = '../register/main?tel=' + that.tel
           wx.navigateTo({ url })
           // }
           // console.log(that.globalData.api.token)

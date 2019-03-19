@@ -2,9 +2,9 @@
   <div>
     <div class="register-part">
       <div class="register-title">{{ title }}</div>
-      <div class="register-main">
+      <form class="register-main">
         <i-input :value="name" title="姓名" autofocus placeholder="请输入姓名" maxlength="50" @change="inputName"/>
-        <i-input :value="studentId" title="学号/工号" autofocus placeholder="请输入学号/工号" maxlength="50" bindchange="inputStudentId"/>
+        <i-input :value="studentId" title="学号/工号" autofocus placeholder="请输入学号/工号" maxlength="50" @change="inputStudentId"/>
         <picker mode="selector" :range="academyList" :range-key="'academyName'" :value="academyIndex" @change="changeAcademy">
           <div class="picker">
             <div class="picker-title">学院</div>
@@ -18,8 +18,9 @@
           </div>
         </picker>
         <i-input :value="tel" title="联系电话" disabled/>
-        <i-button @click="submitClick" type="success">确  认</i-button>
-      </div>
+        <button class="btn" type="success" :disabled="!name || !studentId || !tel" @click="submitClick">确  认</button>
+        <div class="errorText">{{ errorText }}</div>
+      </form>
     </div>
   </div>
 </template>
@@ -42,11 +43,15 @@ export default {
       }],
       classIndex: 0,
       tel: '',
-      wrongText: ''
+      errorText: '',
+      Request: this.$api.api.prototype
     }
   },
-  onLoad () {
+  onLoad (option) {
+    // 初始化
     this.academyIndex = 0
+    this.tel = option.tel
+
     let that = this
     wx.request({
       url: 'http://139.199.88.87:9001/api/class/academy/all',
@@ -92,14 +97,52 @@ export default {
       this.classIndex = event.mp.detail.value
     },
     submitClick () {
-      const url = '../sign/main'
-      wx.navigateTo({ url })
+      this.errorText = ''
+      console.log(new RegExp('^[0-9]{13}$').test(this.studentId))
+      if (!new RegExp('^[0-9]{13}$').test(this.studentId)) {
+        this.errorText = '*学号需为15位数'
+      } else {
+        let that = this
+        let userInfo = {
+          'academyId': this.academyList[this.academyIndex].id,
+          'classId': this.classList[this.classIndex].id,
+          'code': this.studentId,
+          'gzhOpenId': 'string',
+          'name': this.name,
+          'openId': 'string',
+          'roleId': 1,
+          'tel': this.tel,
+          'unionId': 'string',
+          'volunteerId': 'string',
+          'weChat': 'string'
+        }
+        that.Request.register(userInfo, this.globalData.api.token).then(res => {
+          if (res.code !== 400) { // 应为200
+            console.log(res)
+            this.errorText = '*注册失败'
+          } else {
+            const url = '../volunteerPages/sign/main'
+            wx.redirectTo({ url })
+          }
+        }).catch(res => {
+          console.log('fail' + res)
+        })
+      }
     }
   }
 }
 </script>
 
 <style>
+.btn {
+  width: 90%;
+  height: 50px;
+  margin-top: 20px;
+  line-height: 50px;
+  font-size: 19px;
+  background-color: #19be6b;
+  color: #ffffff;
+}
 .register-part {
   width: 100%;
   height: 100%;
@@ -123,5 +166,11 @@ export default {
 .picker-title {
   width: 75px;
   padding-right: 10px;
+}
+.errorText {
+  margin-left: 20px;
+  margin-top: 10px;
+  font-size: 15px;
+  color: #FF0000;
 }
 </style>
