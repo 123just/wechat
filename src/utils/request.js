@@ -28,12 +28,11 @@ Promise.prototype.finally = function (callback) {
  * url
  * data 以对象的格式传入
 */
-function getRequest (url, data, token) {
+function getRequest (url, token) {
   let getRequest = wxPromisify(wx.request)
   return getRequest({
     url: url,
     method: 'GET',
-    data: data,
     header: {
       'Content-Type': 'application/json',
       'token': token

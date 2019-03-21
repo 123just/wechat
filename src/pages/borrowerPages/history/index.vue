@@ -4,7 +4,7 @@
       <div class="history-title">历史借还伞记录</div>
       <div class="history-main">
         <div class="history-item" v-for="item in unsendList" :key="item" @click="toDetails(item.id)">
-          <div>{{item.umbrellaId}}  {{item.borrowerName}}</div>
+          <div>{{item.umbrellaCode}}  {{item.userName}}</div>
           <div>{{item.borrowTime}} 借伞</div>
         </div>
       </div>
@@ -18,7 +18,6 @@
 </template>
 
 <script>
-import { formatTime } from '@/utils/index'
 
 export default {
 
@@ -28,29 +27,22 @@ export default {
       umbrellaId: '',
       remark: '',
       current: 'history',
-      unsendList: [{
-        unsendId: '001',
-        umbrellaId: 'T01',
-        borrowerName: 'just',
-        borrowTime: new Date()
-      }, {
-        unsendId: '002',
-        umbrellaId: 'T02',
-        borrowerName: 'just1',
-        borrowTime: new Date()
-      }]
+      unsendList: [],
+      Request: this.$api.api.prototype
     }
   },
   onShow () {
     this.current = 'history'
-    // 获取unsendList数组
-    this.unsendList.forEach(e => {
-      if (e.borrowTime instanceof Date) {
-        e.borrowTime = formatTime(e.borrowTime)
-      }
-    })
   },
   onLoad () {
+    this.Request.personBorrow(1, 100, this.globalData.api.token).then(res => {
+      if (res.code !== 200) {
+        console.log(res)
+      } else {
+        this.unsendList = res.data.list
+        console.log(res)
+      }
+    })
   },
   methods: {
     handleChange (el) {
@@ -60,12 +52,8 @@ export default {
         wx.navigateTo({ url })
       }
     },
-    historyMore () {
-      const url = '../historyAll/main'
-      wx.navigateTo({ url })
-    },
     toDetails (id) {
-      const url = '../../details/main?id=' + id
+      const url = '../../details/main?id=' + id + '&role=borrower'
       wx.navigateTo({ url })
     }
   }

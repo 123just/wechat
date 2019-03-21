@@ -51,13 +51,25 @@ export default {
     this.current = 'sign'
   },
   onLoad () {
+    this.Request.signStatus(this.globalData.api.token).then(res => {
+      if (res.code !== 200) {
+        console.log(res)
+      } else {
+        if (res.data) {
+          this.signBtnText = 'signOut'
+          this.signTime = '111' // 时间
+        } else {
+          this.signBtnText = 'signIn'
+          this.signTime = ''
+        }
+      }
+    })
     this._getNowTime()
     this._getSignHistory()
   },
   onUnload () {
     this._stopInterval()
   },
-
   methods: {
     handleChange (el) {
       this.current = el.mp.detail.key

@@ -117,7 +117,9 @@ export default {
           'weChat': 'string'
         }
         that.Request.register(userInfo, this.globalData.api.token).then(res => {
-          if (res.code !== 400) { // 应为200
+          if (res.code === -1) {
+            this.errorText = '*' + res.msg
+          } else if (res.code !== 200) { // 应为200
             console.log(res)
             this.errorText = '*注册失败'
           } else {

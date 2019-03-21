@@ -73,7 +73,8 @@ export default {
         success: (res) => {
           that.globalData.api = {token: res.data.data}
           // if (!that.globalData.api.token) {
-          const url = '../register/main?tel=' + that.tel
+          // const url = '../register/main?tel=' + that.tel
+          const url = '../borrowerPages/borrowUmbrella/main'
           wx.navigateTo({ url })
           // }
           // console.log(that.globalData.api.token)
