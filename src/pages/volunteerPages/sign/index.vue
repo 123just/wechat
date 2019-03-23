@@ -55,10 +55,10 @@ export default {
       if (res.code !== 200) {
         console.log(res)
       } else {
-        if (res.data) {
+        if (res.data.type) { // 已签到,显示签退 type = 1
           this.signBtnText = 'signOut'
-          this.signTime = '111' // 时间
-        } else {
+          this.signTime = res.data.time.replace(/-/g, '/') // 时间
+        } else { // 已签退，显示签到
           this.signBtnText = 'signIn'
           this.signTime = ''
         }

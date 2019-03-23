@@ -15,7 +15,7 @@
           </i-cell>
           <i-cell title="借伞时间" :value='borrowInfo.borrowTime'>
           </i-cell>
-          <i-cell title="借伞志愿者" :value='borrowInfo.borrowVolunteerId'>
+          <i-cell title="借伞志愿者" :value='borrowInfo.borrowVolunteerName'>
           </i-cell>
           <i-cell title="应还伞时间" :value='borrowInfo.deadLine'>
           </i-cell>
@@ -84,7 +84,7 @@ export default {
             this.errorText = '*' + res.msg
           } else {
             this.isBorrow = true
-            this.borrowInfo += res.data
+            Object.assign(this.borrowInfo, res.data)
           }
         })
       } else {
