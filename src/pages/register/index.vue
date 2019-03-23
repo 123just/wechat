@@ -17,18 +17,21 @@
             <div class="picker-info">{{ classList[classIndex].className }}</div>
           </div>
         </picker>
-        <i-input :value="tel" title="联系电话" disabled/>
+        <i-input :value="tel" title="联系电话" autofocus placeholder="请输入联系电话" maxlength="11" @change="inputTel"/>
         <button class="btn" type="success" :disabled="!name || !studentId || !tel" @click="submitClick">确  认</button>
         <div class="errorText">{{ errorText }}</div>
       </form>
     </div>
+    <toast :message="toastMsg" :visible="toastVisible"></toast>
   </div>
 </template>
 
 <script>
-
+import toast from 'mpvue-toast'
 export default {
-
+  components: {
+    toast
+  },
   data () {
     return {
       title: '请完善您的信息',
@@ -44,41 +47,43 @@ export default {
       classIndex: 0,
       tel: '',
       errorText: '',
-      Request: this.$api.api.prototype
+      Request: this.$api.api.prototype,
+      operate: '',
+      toastMsg: '',
+      toastVisible: false
     }
   },
-  onLoad (option) {
+  onLoad (options) {
     // 初始化
+    this.toastVisible = false
+    this.title = '请完善您的信息'
     this.academyIndex = 0
-    this.tel = option.tel
-
-    let that = this
-    wx.request({
-      url: 'http://139.199.88.87:9001/api/class/academy/all',
-      method: 'get',
-      header: {
-        'content-type': 'application/json', // 默认值
-        'token': that.globalData.api.token
-      },
-      success: (res) => {
-        this.academyList = res.data.data
-        let academyId = this.academyList[that.academyIndex].id
+    this.operate = options.operate
+    console.log(this.operate)
+    if (options.operate === 'edit') {
+      this.title = '请修改您的信息'
+      this.name = this.globalData.user.userInfo.name
+      this.studentId = this.globalData.user.userInfo.code
+      this.tel = this.globalData.user.userInfo.tel
+    }
+    this.Request.academyAll(this.globalData.api.token).then(res => {
+      if (res.code !== 200) {
+        console.log(res)
+      } else {
+        console.log(res)
+        this.academyList = res.data
+        let academyId = this.academyList[this.academyIndex].id
         this._getClassList(academyId)
       }
     })
   },
   methods: {
     _getClassList (academyId) {
-      let that = this
-      wx.request({
-        url: 'http://139.199.88.87:9001/api/class/' + academyId,
-        method: 'get',
-        header: {
-          'content-type': 'application/json', // 默认值
-          'token': that.globalData.api.token
-        },
-        success: (res) => {
-          this.classList = res.data.data
+      this.Request.classInfo(academyId, this.globalData.api.token).then(res => {
+        if (res.code !== 200) {
+          console.log(res)
+        } else {
+          this.classList = res.data
           console.log(this.classList)
         }
       })
@@ -89,6 +94,9 @@ export default {
     inputStudentId (e) {
       this.studentId = e.mp.detail.detail.value
     },
+    inputTel (e) {
+      this.tel = e.mp.detail.detail.value
+    },
     changeAcademy (e) {
       this.academyIndex = e.mp.detail.value
       this._getClassList(this.academyList[this.academyIndex].id)
@@ -98,37 +106,50 @@ export default {
     },
     submitClick () {
       this.errorText = ''
-      console.log(new RegExp('^[0-9]{13}$').test(this.studentId))
       if (!new RegExp('^[0-9]{13}$').test(this.studentId)) {
         this.errorText = '*学号需为15位数'
+      } else if (!new RegExp('^(13[0-9]|15[012356789]|17[0135678]|18[0-9]|14[579]|19[89]|166)[0-9]{8}$').test(this.tel)) {
+        this.errorText = '*手机号码不正确'
       } else {
-        let that = this
         let userInfo = {
           'academyId': this.academyList[this.academyIndex].id,
           'classId': this.classList[this.classIndex].id,
           'code': this.studentId,
-          'gzhOpenId': 'string',
           'name': this.name,
-          'openId': 'string',
-          'roleId': 1,
-          'tel': this.tel,
-          'unionId': 'string',
-          'volunteerId': 'string',
-          'weChat': 'string'
+          'tel': this.tel
         }
-        that.Request.register(userInfo, this.globalData.api.token).then(res => {
-          if (res.code === -1) {
-            this.errorText = '*' + res.msg
-          } else if (res.code !== 200) { // 应为200
-            console.log(res)
-            this.errorText = '*注册失败'
-          } else {
-            const url = '../volunteerPages/sign/main'
-            wx.redirectTo({ url })
-          }
-        }).catch(res => {
-          console.log('fail' + res)
-        })
+        if (this.operate === 'new') {
+          this.Request.register(userInfo, this.globalData.api.token).then(res => {
+            if (res.code === -1) {
+              this.errorText = '*' + res.msg
+            } else if (res.code !== 200) {
+              console.log(res)
+              this.errorText = '*注册失败'
+            } else {
+              this.toastMsg = '注册成功'
+              this.toastVisible = true
+              this.globalData.api.token = res.msg
+              Object.assign(this.globalData.user.userInfo, userInfo) // 修改userInfo信息
+              const url = '../borrowerPages/borrowUmbrella/main'
+              wx.redirectTo({ url })
+            }
+          })
+        } else {
+          this.Request.userInfo(userInfo, this.globalData.api.token).then(res => {
+            if (res.code === -1) {
+              this.errorText = '*' + res.msg
+            } else if (res.code !== 200) {
+              console.log(res)
+              this.errorText = '*修改失败'
+            } else {
+              this.toastMsg = '修改成功'
+              this.toastVisible = true
+              // 修改userInfo信息
+              Object.assign(this.globalData.user.userInfo, userInfo)
+              wx.navigateBack()
+            }
+          })
+        }
       }
     }
   }

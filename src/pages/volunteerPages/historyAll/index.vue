@@ -20,23 +20,8 @@ export default {
 
   data () {
     return {
-      openId: '',
-      umbrellaId: '',
-      remark: '',
       current: 'history',
-      historyList: [{
-        unsendId: '001',
-        umbrellaId: 'T01',
-        borrowerName: 'just',
-        borrowTime: new Date(),
-        isBorrow: true
-      }, {
-        unsendId: '002',
-        umbrellaId: 'T02',
-        borrowerName: 'just1',
-        borrowTime: new Date(),
-        isBorrow: false
-      }],
+      historyList: [],
       Request: this.$api.api.prototype
     }
   },
@@ -53,8 +38,7 @@ export default {
   },
   methods: {
     toDetails (id) {
-      console.log(id)
-      const url = '../../details/main?id=' + id
+      const url = '../../details/main?id=' + id + '&role=volunteer'
       wx.navigateTo({ url })
     }
   }

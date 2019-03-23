@@ -99,16 +99,12 @@ export default {
     },
     _getSignHistory () {
       let that = this
-      wx.request({
-        url: 'http://139.199.88.87:9001/api/user/signInfo/all/0/10',
-        method: 'get',
-        header: {
-          'content-type': 'application/json',
-          'token': that.globalData.api.token
-        },
-        success: function (res) {
-          that.signHistory = res.data.data.list
-          console.log(that.signHistory)
+      this.Request.signInfo(1, 30, this.globalData.api.token).then(res => {
+        if (res.code !== 200) {
+          console.log(res)
+        } else {
+          console.log(res)
+          that.signHistory = res.data.list
         }
       })
     },

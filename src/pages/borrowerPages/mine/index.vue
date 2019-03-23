@@ -5,19 +5,18 @@
           <div class="user-name">
             <div>{{ name }}</div>
           </div>
-          <div class="user-motto">
-            <div class="avatar"></div>
+          <div>
             <div @click="changeRole">切换身份>></div>
           </div>
         </div>
         <i-cell-group>
-          <i-cell title="个人信息" is-link url="/pages/index/main">
+          <i-cell title="个人信息" is-link url="/pages/register/main?operate=edit">
             <i-icon type="addressbook_fill" size="20" slot="icon" color="#4B9DF2" />
           </i-cell>
-          <i-cell title="负责人">
+          <i-cell title="负责人" :value="manager.name">
             <i-icon type="mine_fill" size="20" slot="icon" color="#4B9DF2" />
           </i-cell>
-          <i-cell title="负责人联系方式">
+          <i-cell title="负责人联系方式" :value="manager.tel">
             <i-icon type="mobilephone_fill" size="20" slot="icon" color="#4B9DF2" />
           </i-cell>
         </i-cell-group>
@@ -36,16 +35,27 @@ export default {
 
   data () {
     return {
-      openId: '',
-      name: 'JUST',
-      volunteerId: '001',
-      umbrellaId: 'T01',
-      remark: '',
-      current: 'mine'
+      name: '',
+      current: 'mine',
+      manager: {
+        name: '',
+        tel: ''
+      },
+      Request: this.$api.api.prototype
     }
+  },
+  onLoad () {
+    this.Request.inCharge(this.globalData.api.token).then(res => {
+      if (res.code !== 200) {
+        console.log(res)
+      } else {
+        this.manager = res.data
+      }
+    })
   },
   onShow () {
     this.current = 'mine'
+    this.name = this.globalData.user.userInfo.name
   },
   methods: {
     handleChange (el) {

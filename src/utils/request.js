@@ -30,14 +30,24 @@ Promise.prototype.finally = function (callback) {
 */
 function getRequest (url, token) {
   let getRequest = wxPromisify(wx.request)
-  return getRequest({
-    url: url,
-    method: 'GET',
-    header: {
-      'Content-Type': 'application/json',
-      'token': token
-    }
-  })
+  if (token) {
+    return getRequest({
+      url: url,
+      method: 'GET',
+      header: {
+        'Content-Type': 'application/json',
+        'token': token
+      }
+    })
+  } else {
+    return getRequest({
+      url: url,
+      method: 'GET',
+      header: {
+        'Content-Type': 'application/json'
+      }
+    })
+  }
 }
 /**
  * 微信请求post方法封装
@@ -45,16 +55,27 @@ function getRequest (url, token) {
  * data 以对象的格式传入
 */
 function postRequest (url, data, token) {
-  var postRequest = wxPromisify(wx.request)
-  return postRequest({
-    url: url,
-    method: 'POST',
-    data: data,
-    header: {
-      'content-type': 'application/json',
-      'token': token
-    }
-  })
+  let postRequest = wxPromisify(wx.request)
+  if (token) {
+    return postRequest({
+      url: url,
+      method: 'POST',
+      data: data,
+      header: {
+        'content-type': 'application/json',
+        'token': token
+      }
+    })
+  } else {
+    return postRequest({
+      url: url,
+      method: 'POST',
+      data: data,
+      header: {
+        'content-type': 'application/json'
+      }
+    })
+  }
 }
 module.exports = {
   postRequest: postRequest,

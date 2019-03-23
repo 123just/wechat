@@ -31,7 +31,6 @@ export default {
   },
   data () {
     return {
-      openId: '',
       umbrellaId: '',
       remark: '',
       current: 'sendUmbrella',
@@ -57,20 +56,24 @@ export default {
         }
         if (this.modalMsg === 'return') {
           this.Request.returnUmbrella(info, this.globalData.api.token).then(res => {
-            if (res.code !== '200') {
+            if (res.code !== 200) {
               this.errorText = '*' + res.msg
             } else {
               this.toastMsg = '归还成功'
               this.toastVisible = true
+              this.umbrellaId = ''
+              this.remark = ''
             }
           })
         } else {
           this.Request.repairUmbrella(info, this.globalData.api.token).then(res => {
-            if (res.code !== '200') {
+            if (res.code !== 200) {
               this.errorText = '*' + res.msg
             } else {
               this.toastMsg = '维修成功'
               this.toastVisible = true
+              this.umbrellaId = ''
+              this.remark = ''
             }
           })
         }

@@ -3,30 +3,30 @@
     <div class="borrow-part">
       <div class="borrow-title">借  伞</div>
       <div class="borrow-main" v-if="!isBorrow">
-        <i-input :value="borrowInfo.umbrellaCode" title="伞编号" autofocus placeholder="请输入伞编号（如：T01）" maxlength="5" @change="inputUmbrellaCode"/>
-        <i-input :value="borrowInfo.volunteerId" title="借伞志愿者编号" autofocus placeholder="请输入借伞志愿者编号" maxlength="10" @change="inputVolunteerId"/>
+        <i-input :value="borrowInfo.umbrellaCode" title="伞编号" autofocus placeholder="请输入伞编号（如：T001）" maxlength="4" @change="inputUmbrellaCode"/>
+        <i-input :value="borrowInfo.volunteerId" title="借伞志愿者编号" autofocus placeholder="请输入借伞志愿者编号" maxlength="3" @change="inputVolunteerId"/>
         <i-input :value="borrowInfo.remark" title="备注" type="textarea" autofocus placeholder="可不填" maxlength="150" @change="inputRemark"/>
         <i-button @click="borrowClick" type="success">确认借伞</i-button>
         <div class="errorText">{{ errorText }}</div>
       </div>
       <div class="borrow-info-main" v-if="isBorrow">
         <i-cell-group>
-          <i-cell title="伞编号" :value='borrowItem.umbrellaCode'>
+          <i-cell title="伞编号" :value='borrowInfo.umbrellaCode'>
           </i-cell>
-          <i-cell title="借伞时间" :value='borrowItem.borrowTime'>
+          <i-cell title="借伞时间" :value='borrowInfo.borrowTime'>
           </i-cell>
-          <i-cell title="借伞志愿者" :value='borrowItem.volunteerId'>
+          <i-cell title="借伞志愿者" :value='borrowInfo.borrowVolunteerId'>
           </i-cell>
-          <i-cell title="应还伞时间" :value='borrowItem.deadLine'>
+          <i-cell title="应还伞时间" :value='borrowInfo.deadLine'>
           </i-cell>
-          <i-cell title="备注" :value='borrowItem.remark'>
+          <i-cell title="备注" :value='borrowInfo.remark'>
           </i-cell>
         </i-cell-group>
         <div class="remarks">注意：爱心伞使用后需及时归还至原借伞点（伞编号首字母T代表图书馆、S代表食堂、J代表恕园教学区），若一周内未及时归还则扣除信用积分1分</div>
       </div>
     </div>
     <i-modal :visible="modalVisible" @ok="modalOk" @cancel="modalCancel">
-      <div>确认向{{ volunteerId }}志愿者借{{ umbrellaCode }}伞？</div>
+      <div>确认向{{ borrowInfo.volunteerId }}志愿者借{{ borrowInfo.umbrellaCode }}伞？</div>
     </i-modal>
     <i-tab-bar :current="current" color="#4B9DF2" @change="handleChange" style="height:50px">
       <i-tab-bar-item key="borrowUmbrella" icon="group" current-icon="group_fill" title="借伞"></i-tab-bar-item>
@@ -42,16 +42,9 @@ export default {
 
   data () {
     return {
-      openId: '',
       current: 'borrowUmbrella',
       isBorrow: false,
       borrowInfo: {},
-      borrowItem: {
-        'umbrellaCode': 'T003',
-        'borrowTime': 'T003',
-        'volunteerId': 'T003',
-        'deadLine': 'T003'
-      },
       errorText: '',
       Request: this.$api.api.prototype,
       modalVisible: false
@@ -91,7 +84,7 @@ export default {
             this.errorText = '*' + res.msg
           } else {
             this.isBorrow = true
-            this.borrowInfo = res.data
+            this.borrowInfo += res.data
           }
         })
       } else {
