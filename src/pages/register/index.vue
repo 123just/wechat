@@ -22,15 +22,15 @@
         <div class="errorText">{{ errorText }}</div>
       </form>
     </div>
-    <toast :message="toastMsg" :visible="toastVisible"></toast>
+    <mptoast />
   </div>
 </template>
 
 <script>
-import toast from 'mpvue-toast'
+import mptoast from 'mptoast'
 export default {
   components: {
-    toast
+    mptoast
   },
   data () {
     return {
@@ -48,14 +48,11 @@ export default {
       tel: '',
       errorText: '',
       Request: this.$api.api.prototype,
-      operate: '',
-      toastMsg: '',
-      toastVisible: false
+      operate: ''
     }
   },
   onLoad (options) {
     // 初始化
-    this.toastVisible = false
     this.title = '请完善您的信息'
     this.academyIndex = 0
     this.operate = options.operate
@@ -70,7 +67,6 @@ export default {
       if (res.code !== 200) {
         console.log(res)
       } else {
-        console.log(res)
         this.academyList = res.data
         let academyId = this.academyList[this.academyIndex].id
         this._getClassList(academyId)
@@ -84,7 +80,6 @@ export default {
           console.log(res)
         } else {
           this.classList = res.data
-          console.log(this.classList)
         }
       })
     },
@@ -126,8 +121,7 @@ export default {
               console.log(res)
               this.errorText = '*注册失败'
             } else {
-              this.toastMsg = '注册成功'
-              this.toastVisible = true
+              this.$mptoast('注册成功', 'success')
               this.globalData.api.token = res.msg
               Object.assign(this.globalData.user.userInfo, userInfo) // 修改userInfo信息
               const url = '../borrowerPages/borrowUmbrella/main'
@@ -142,8 +136,7 @@ export default {
               console.log(res)
               this.errorText = '*修改失败'
             } else {
-              this.toastMsg = '修改成功'
-              this.toastVisible = true
+              this.$mptoast('修改成功', 'success')
               // 修改userInfo信息
               Object.assign(this.globalData.user.userInfo, userInfo)
               wx.navigateBack()

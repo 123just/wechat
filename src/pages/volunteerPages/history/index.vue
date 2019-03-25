@@ -4,6 +4,7 @@
       <div class="history-title">超时未还伞记录</div>
       <div class="history-more" @click="historyMore">历史经手伞记录>></div>
       <div class="history-main">
+        <div class="history-info" v-if="unsendList.length === 0">无超时未还伞记录~</div>
         <div class="history-item" v-for="item in unsendList" :key="item" @click="toDetails(item.id)">
           <div>{{item.umbrellaCode}}  {{item.userName}}</div>
           <div>{{item.borrowTime}} 借伞</div>
@@ -25,7 +26,6 @@ export default {
 
   data () {
     return {
-      openId: '',
       umbrellaId: '',
       remark: '',
       current: 'history',
@@ -88,6 +88,11 @@ export default {
   padding-right: 10px;
   font-size: 15px;
   color: #333;
+}
+.history-info {
+  color: #999;
+  font-size: 12px;
+  text-align: center;
 }
 .history-item {
   display: flex;

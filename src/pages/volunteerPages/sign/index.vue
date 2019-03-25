@@ -17,6 +17,7 @@
         </div>
       </div>  
     </div>
+    <mptoast />
     <i-tab-bar :current="current" color="#4B9DF2" @change="handleChange">
       <i-tab-bar-item key="sign" icon="homepage" current-icon="homepage_fill" title="首页"></i-tab-bar-item>
       <i-tab-bar-item key="sendUmbrella" icon="group" current-icon="group_fill" title="还伞"></i-tab-bar-item>
@@ -30,10 +31,12 @@
 import { formatTime, formatOnlyTime } from '@/utils/index'
 import { setInterval, clearInterval } from 'timers'
 import SignHistoryCard from '@/components/sign-history-card'
+import mptoast from 'mptoast'
 
 export default {
   components: {
-    SignHistoryCard
+    SignHistoryCard,
+    mptoast
   },
 
   data () {
@@ -79,15 +82,16 @@ export default {
       }
     },
     signClick () {
-      console.log('signClick')
       this.Request.sign(this.globalData.api.token).then(res => {
         if (res.code !== 200) {
           console.log(res)
         } else {
           if (this.signBtnText === 'signOut') { // 签退
+            this.$mptoast('签退成功')
             this.signBtnText = 'signIn'
             this.signTime = ''
           } else { // 签到
+            this.$mptoast('签到成功')
             this.signBtnText = 'signOut'
             this.signTime = formatOnlyTime(new Date())
           }

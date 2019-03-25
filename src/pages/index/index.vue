@@ -5,45 +5,40 @@
     </div>
     <button class="role-judge" @click="goToVolunteer">志愿者</button>
     <button class="role-judge" @click="goToBorrower">借伞人</button>
-    <toast :message="toastMsg" :visible="toastVisible"></toast>
+    <mptoast />
   </div>
 </template>
 
 <script>
-import toast from 'mpvue-toast'
+import mptoast from 'mptoast'
 export default {
   components: {
-    toast
+    mptoast
   },
   data () {
     return {
       hintText: '请选择你的角色：',
       userInfo: {},
       role: [], // 1-管理员 2-志愿者 3-普通用户 4-负责人
-      Request: this.$api.api.prototype,
-      toastMsg: '',
-      toastVisible: false
+      Request: this.$api.api.prototype
     }
   },
   onLoad () {
-    this.toastMsg = false
     this.login()
   },
   methods: {
     // 获取个人信息
     goToVolunteer () {
-      if (this.role) {
+      if (this.role.length !== 0) {
         // 是否注册（若注册...）确认是否是志愿者
         if (this.role.indexOf(2) === -1) {
-          this.toastMsg = '您目前不是志愿者'
-          this.toastVisible = true
+          this.$mptoast('您目前不是志愿者', 'info', 2000)
         } else {
           const url = '../volunteerPages/sign/main'
           wx.redirectTo({ url })
         }
       } else {
-        this.toastMsg = '未登录成功'
-        this.toastVisible = true
+        this.$mptoast('未登录成功', 'info', 2000)
       }
     },
     goToBorrower () {
@@ -58,8 +53,7 @@ export default {
           wx.redirectTo({ url })
         }
       } else {
-        this.toastMsg = '未登录成功'
-        this.toastVisible = true
+        this.$mptoast('未登录成功', 'info', 2000)
       }
     },
     // 登录

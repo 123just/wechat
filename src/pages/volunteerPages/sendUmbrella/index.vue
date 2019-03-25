@@ -13,7 +13,7 @@
     <i-modal :visible="modalVisible" @ok="modalOk" @cancel="modalCancel">
       <div>确认{{modalMsg === 'return' ? '归还' : '维修'}}{{ umbrellaId }}伞？</div>
     </i-modal>
-    <toast :message="toastMsg" :visible="toastVisible"></toast>
+    <mptoast />
     <i-tab-bar :current="current" color="#4B9DF2" @change="handleChange" style="height:50px">
       <i-tab-bar-item key="sign" icon="homepage" current-icon="homepage_fill" title="首页"></i-tab-bar-item>
       <i-tab-bar-item key="sendUmbrella" icon="group" current-icon="group_fill" title="还伞"></i-tab-bar-item>
@@ -24,10 +24,10 @@
 </template>
 
 <script>
-import toast from 'mpvue-toast'
+import mptoast from 'mptoast'
 export default {
   components: {
-    toast
+    mptoast
   },
   data () {
     return {
@@ -37,9 +37,7 @@ export default {
       errorText: '',
       Request: this.$api.api.prototype,
       modalVisible: false, // modal是否弹出
-      modalMsg: 'return',
-      toastVisible: false,
-      toastMsg: '成功'
+      modalMsg: 'return'
     }
   },
   onShow () {
@@ -59,8 +57,7 @@ export default {
             if (res.code !== 200) {
               this.errorText = '*' + res.msg
             } else {
-              this.toastMsg = '归还成功'
-              this.toastVisible = true
+              this.$mptoast('归还成功', 'success')
               this.umbrellaId = ''
               this.remark = ''
             }
@@ -70,8 +67,7 @@ export default {
             if (res.code !== 200) {
               this.errorText = '*' + res.msg
             } else {
-              this.toastMsg = '维修成功'
-              this.toastVisible = true
+              this.$mptoast('维修成功', 'success')
               this.umbrellaId = ''
               this.remark = ''
             }
