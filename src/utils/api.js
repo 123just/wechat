@@ -1,5 +1,5 @@
 import requestAll from './request'
-const apiUrl = 'http://192.168.43.60:9001/'
+const apiUrl = 'http://139.199.88.87:9001/'
 
 class api {
   login (code) {
