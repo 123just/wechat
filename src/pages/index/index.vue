@@ -1,10 +1,10 @@
 <template>
-  <div class="container">
+  <div class="container" style="background: url(../../img/wechat.jpg) no-repeat">
     <div class="hint-text">
       {{hintText}}
     </div>
-    <button class="role-judge" @click="goToVolunteer">志愿者</button>
-    <button class="role-judge" @click="goToBorrower">借伞人</button>
+    <div class="role-judge" @click="goToVolunteer">志愿者</div>
+    <div class="role-judge" @click="goToBorrower">借伞人</div>
     <mptoast />
   </div>
 </template>

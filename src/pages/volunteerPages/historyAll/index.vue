@@ -3,7 +3,7 @@
     <div class="history-part">
       <div class="history-title">历史借还伞记录</div>
       <div class="history-main">
-        <div class="history-info" v-if="unsendList.length === 0">无历史借还伞记录~</div>
+        <div class="history-info" v-if="unsendList && unsendList.length === 0">无历史借还伞记录~</div>
         <div class="history-item" v-for="item in historyList" :key="item" @click="toDetails(item.id)">
           <div>{{item.umbrellaCode}}  {{item.userName}}</div>
           <div>

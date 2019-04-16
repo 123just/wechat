@@ -1,6 +1,6 @@
 <template>
   <div class="sign">
-    <div class="sign-part" style="background:url('../../../img/sign_bg.png') no-repeat">
+    <div class="sign-part">
       <div class="sign-part-time">
         <div class="now-time">{{nowTime}}</div>
         <div class="sign-time" v-if='signTime'>签到时间：{{signTime}}</div>
@@ -136,6 +136,8 @@ export default {
   align-items: center;
   width: 100%;
   height: 210px;
+  background:url('https://justdj-umbrella.oss-cn-hangzhou.aliyuncs.com/sign_bg.png') no-repeat;
+  background-size: 100% 100%;
 }
 .sign-part-time {
   width: 100%;
