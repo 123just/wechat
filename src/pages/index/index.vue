@@ -1,11 +1,20 @@
 <template>
-  <div class="container" style="background: url(../../img/wechat.jpg) no-repeat">
-    <div class="hint-text">
-      {{hintText}}
+  <div class="container">
+    <div class="backgroud">
+      <div class="title">
+        <div class="logo">
+          <img src="https://justdj-umbrella.oss-cn-hangzhou.aliyuncs.com/umbrella_active.png" style="width:40px; height:40px;">
+        </div>
+        <div class="titleText">{{titleText}}</div>
+        <div class="introText">{{introText}}</div>
+      </div>
+      <div>
+        <i-button class="role-judge vButton" type="primary" @click="goToVolunteer">志愿者</i-button>
+        <i-button class="role-judge bButton" type="success" @click="goToBorrower">借伞人</i-button>
+      </div>
+      <div class="copyright">{{copyrightText}}</div>
+      <mptoast />
     </div>
-    <div class="role-judge" @click="goToVolunteer">志愿者</div>
-    <div class="role-judge" @click="goToBorrower">借伞人</div>
-    <mptoast />
   </div>
 </template>
 
@@ -17,7 +26,9 @@ export default {
   },
   data () {
     return {
-      hintText: '请选择你的角色：',
+      titleText: '杭州师范大学校园爱心伞',
+      introText: '校园爱心伞项目微信小程序端为一般借伞人和志愿者所使用，请在注册时填写真实信息。进入系统前应先选择身份。',
+      copyrightText: 'Copyright © 2019 杭州师范大学校园爱心伞管理系统',
       userInfo: {},
       role: [], // 1-管理员 2-志愿者 3-普通用户 4-负责人
       Request: this.$api.api.prototype
@@ -42,7 +53,6 @@ export default {
       }
     },
     goToBorrower () {
-      console.log(this.userInfo)
       // 是否注册（若注册...）
       if (this.userInfo) {
         if (this.userInfo.userStatus === 4) { // 0-停用 1-过期 2-正常 3-账号删除 4- 未初始化
@@ -84,23 +94,51 @@ export default {
 
 <style scoped>
 .container {
+  background: url(http://justdj-umbrella.oss-cn-hangzhou.aliyuncs.com/wechatBg.png) no-repeat;
+  background-size: 100% 100%;
+  color: #ffffff;
+}
+.backgroud {
   display: flex;
   flex-direction: column;
-  justify-content: center;
-}
-
-.hint-text {
-  font-size: 15px;
-  margin: 0 0 10px 15px;
+  justify-content: space-between;
   width: 100%;
+  height: 100%;
+  background: rgba(0, 0, 0, 0.5);
 }
-
-.role-judge{
+.title {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  margin: 120px 0 80px 0;
+}
+.logo {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  width: 76px;
+  height: 76px;
+  background: rgba(0, 0, 0, 0.5);
+  border-radius: 38px;
+}
+.titleText {
+  font-size: 20px;
+  margin: 5px 0 20px 0;
+}
+.introText {
+  width: 85%;
+  font-size: 12px;
+  color: #dddddd;
+}
+.role-judge {
   width: 100%;
   height: 80px;
-  margin: 10px;
   background: #dddddd;
-  line-height: 80px;
   border-radius: 0;
+}
+.copyright {
+  margin-bottom: 5px;
+  font-size: 11px;
+  text-align: center;
 }
 </style>
