@@ -3,7 +3,7 @@
     <div class="send-part">
       <div class="send-title">志愿还伞/维修伞</div>
       <div class="send-main">
-        <i-input :value="umbrellaId" title="伞编号" autofocus placeholder="请输入归还伞编号（如：T01）" maxlength="5" @change="inputUmbrellaId"/>
+        <i-input :value="umbrellaId" title="伞编号" autofocus placeholder="请输入归还伞编号（如：T001）" maxlength="5" @change="inputUmbrellaId"/>
         <i-input :value="remark" title="备注" type="textarea" autofocus placeholder="（若损坏）请输入具体损坏情况" maxlength="150" @change="inputRemark"/>
         <i-button @click="sendClick" type="success">确认还伞</i-button>
         <i-button @click="repairClick" type="error">维修</i-button>

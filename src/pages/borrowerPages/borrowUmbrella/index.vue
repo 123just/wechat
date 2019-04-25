@@ -37,6 +37,7 @@
 </template>
 
 <script>
+import {formatChinaTime} from '@/utils/index'
 
 export default {
 
@@ -85,6 +86,10 @@ export default {
           } else {
             this.isBorrow = true
             Object.assign(this.borrowInfo, res.data)
+            let date = new Date(this.borrowInfo.borrowTime)
+            this.borrowInfo.borrowTime = formatChinaTime(date)
+            let deadDate = new Date(this.borrowInfo.deadLine)
+            this.borrowInfo.deadLine = formatChinaTime(deadDate)
           }
         })
       } else {

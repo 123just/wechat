@@ -7,7 +7,7 @@
         <div class="history-item" v-for="item in historyList" :key="item" @click="toDetails(item.id)">
           <div>{{item.umbrellaCode}}  {{item.userName}}</div>
           <div>
-          {{item.borrowTime}} {{isBorrow ? '借伞': '还伞'}}
+          {{item.borrowTime}} 借伞
           </div>
         </div>
       </div>

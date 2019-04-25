@@ -28,7 +28,7 @@
 </template>
 
 <script>
-import { formatTime, formatOnlyTime } from '@/utils/index'
+import { formatTime, formatOnlyTime, formatChinaTime } from '@/utils/index'
 import { setInterval, clearInterval } from 'timers'
 import SignHistoryCard from '@/components/sign-history-card'
 import mptoast from 'mptoast'
@@ -107,8 +107,17 @@ export default {
         if (res.code !== 200) {
           console.log(res)
         } else {
-          console.log(res)
           that.signHistory = res.data.list
+          if (that.signHistory) {
+            that.signHistory.forEach(element => {
+              let date = new Date(element.signInTime)
+              element.signInTime = formatChinaTime(date)
+              if (element.signBackTime) {
+                let backDate = new Date(element.signBackTime)
+                element.signBackTime = formatChinaTime(backDate)
+              }
+            })
+          }
         }
       })
     },

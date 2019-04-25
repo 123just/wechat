@@ -99,4 +99,8 @@ export default {
   font-size: 12px;
   text-align: center;
 }
+.history-main {
+  height: 465px;
+  overflow: scroll;
+}
 </style>
